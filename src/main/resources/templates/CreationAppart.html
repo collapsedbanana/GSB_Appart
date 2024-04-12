@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier Appart</title>
+</head>
+<body>
+<h2>Modifier un appartement</h2>
+
+<form action="/appartements/modifier/{id}" method="post">
+    Type d'appartement: <input type="text" name="type_appart" value="{type_appart}" /><br/>
+    Prix location: <input type="number" name="prix_loc" value="{prix_loc}" /><br/>
+    Prix charges: <input type="number" name="prix_charge" value="{prix_charge}" /><br/>
+    Rue: <input type="text" name="rue" value="{rue}" /><br/>
+    Arrondissement: <input type="text" name="arrondissement" value="{arrondissement}" /><br/>
+    Étage: <input type="number" name="etage" value="{etage}" /><br/>
+    Ascenseur: <input type="checkbox" name="ascenseur" {ascenseur_checked} /><br/>
+    Préavis: <input type="text" name="preavis" value="{preavis}" /><br/>
+    Date libre: <input type="date" name="date_libre" value="{date_libre}" /><br/>
+
+    <button type="submit">Modifier</button>
+</form>
+</body>
+</html>

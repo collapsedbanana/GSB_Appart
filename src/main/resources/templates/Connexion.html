@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr" >
+<head>
+    <meta charset="utf-8">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="/Connexion.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="title-text">
+    <div class="title login">Connexion</div>
+</div>
+<div class="form-inner">
+    <form action="/login" method="post" class="login">
+        <div class="field">
+            <input type="text" name="username" placeholder="Email ou Nom d'utilisateur" required>
+            <input type="password" name="password" placeholder="Mot de passe" required>
+        </div>
+        <div class="field btn">
+            <input type="submit" value="Connexion">
+        </div>
+        <div class="signup-link">
+            Pas encore membre ? <a href="/inscription">Inscrivez-vous maintenant</a>
+        </div>
+
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+    </form>
+
+</div>
+</body>
+</html>

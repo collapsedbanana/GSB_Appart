@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil</title>
+    <link rel="stylesheet" href="/Profil.css">
+</head>
+<body>
+
+<h1>Page de Profil</h1>
+<p>Bienvenue sur votre profil !</p>
+
+<div th:each="appart : ${appartements}">
+    <table>
+        <thead>
+        <tr>
+            <th>Type d'appartement</th>
+            <th>Prix location</th>
+            <th>Prix charges</th>
+            <th>Rue</th>
+            <th>Arrondissement</th>
+            <th>Étage</th>
+            <th>Ascenseur</th>
+            <th>Préavis</th>
+            <th>Date libre</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${appart.type_appart}"></td>
+            <td th:text="${appart.prix_loc}"></td>
+            <td th:text="${appart.prix_charge}"></td>
+            <td th:text="${appart.rue}"></td>
+            <td th:text="${appart.arrondissement}"></td>
+            <td th:text="${appart.etage}"></td>
+            <td th:text="${appart.ascenseur ? 'Oui' : 'Non'}"></td>
+            <td th:text="${appart.preavis}"></td>
+            <td th:text="${#dates.format(appart.date_libre, 'dd/MM/yyyy')}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- Bouton de modification pour chaque appartement -->
+    <form th:action="@{/appartements/modifier/{id}(id=${appart.id_appart})}" method="get">
+        <button type="submit">Modifier</button>
+    </form>
+
+    <div style="height:20px;"></div>
+</div>
+
+<form action="/logout" method="get">
+    <button type="submit">Se déconnecter</button>
+</form>
+
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+</body>
+</html>
