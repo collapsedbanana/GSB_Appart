@@ -20,6 +20,6 @@ public class ProfilController {
 
     @GetMapping("/logout")
     public String logout() {
-        return "redirect:/login?logout";
+        return "redirect:/login";
     }
 }
