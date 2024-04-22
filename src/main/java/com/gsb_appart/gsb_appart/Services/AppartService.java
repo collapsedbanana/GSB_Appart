@@ -9,6 +9,7 @@
     import org.springframework.web.bind.annotation.PostMapping;
     import org.springframework.web.bind.annotation.RequestBody;
 
+    import java.util.Collections;
     import java.util.List;
     import java.util.Optional;
 
@@ -66,10 +67,10 @@
         }
 
         public List<Appart> getAppartsByPropriosId(Long id) {
-            return appartRepository.findByProprios_IdUser(id); // This follows Java conventions
-
-
+            Optional<Appart> appart = appartRepository.findByProprios_Id(id);
+            return appart.map(Collections::singletonList).orElse(Collections.emptyList());
         }
+
 
 
     }

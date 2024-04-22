@@ -26,7 +26,7 @@ public class Proprios extends Utilisateur {
     public Proprios() {
         super();
     }
-
+//proprios ont plusieurs à part l'inverse est faux un appart ne peut avoir qu'un proprio
     @OneToMany(mappedBy = "proprios")
     private List<Appart> apparts;
 }

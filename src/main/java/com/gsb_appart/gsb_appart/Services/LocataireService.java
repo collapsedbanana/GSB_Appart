@@ -20,12 +20,12 @@ public class LocataireService {
 
     @Transactional
     public Locataire addLocataire(Locataire locataire) {
-        if (locataire.getIdAppart() == null) {
+        if (locataire.getAppart() == null || locataire.getAppart().getId_appart() == null) {
             throw new IllegalStateException("Un locataire doit avoir un appartement assigné.");
         }
 
-        Appart appart = appartRepository.findById(locataire.getIdAppart())
-                .orElseThrow(() -> new RuntimeException("Appartement non trouvé pour cet id :: " + locataire.getIdAppart()));
+        Appart appart = appartRepository.findById(locataire.getAppart().getId_appart())
+                .orElseThrow(() -> new RuntimeException("Appartement non trouvé pour cet id :: " + locataire.getAppart().getId_appart()));
 
         if (appart.getLocataire() != null) {
             throw new IllegalStateException("L'appartement est déjà assigné à un autre locataire.");
@@ -41,6 +41,7 @@ public class LocataireService {
 
         return savedLocataire;
     }
+
 
     public Locataire assignLocataireToAppart(Locataire locataire, Long appartId) {
         Appart appart = appartRepository.findById(appartId).orElseThrow(() -> new RuntimeException("Appartement non trouvé"));
@@ -69,7 +70,7 @@ public class LocataireService {
         locataire.setCodeville_banque(locataireDetails.getCodeville_banque());
         locataire.setTel_banque(locataireDetails.getTel_banque());
         locataire.setNumappart(locataireDetails.getNumappart());
-        locataire.setIdAppart(locataireDetails.getIdAppart());
+        locataire.setId(locataireDetails.getId());
 
 
         return locataireRepository.save(locataire);

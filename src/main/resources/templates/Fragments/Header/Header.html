@@ -13,7 +13,7 @@
                 <li sec:authorize="${isAuthenticated() and hasApparts}"><a th:href="@{/louer}">Louer votre bien</a></li>
                 <!-- Afficher seulement si l'utilisateur est connecté -->
                 <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/CreationAppart}">Ajouter un Appartement</a>
+                    <a th:href="@{/UpdateorCreate}">Ajouter un Appartement</a>
                 </li>
                 <!-- Toggle entre Connexion et Profil -->
                 <li sec:authorize="!isAuthenticated()">

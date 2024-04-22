@@ -41,12 +41,13 @@ public class Appart  {
 
     //Proprios
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id_user")
+    @JoinColumn(name = "proprios_id_user")
     private Proprios proprios;
 
     //Photo
     @OneToMany(mappedBy = "appart")
     private List<Photo> photos;
+
     //Locataire
     @OneToOne(mappedBy = "appart")
     private Locataire locataire;
