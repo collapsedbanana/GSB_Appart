@@ -15,8 +15,9 @@ public class ProfilController {
     @GetMapping("/profil")
     public String profil(Model model) {
         model.addAttribute("appartements", appartService.getAllApparts());
-        return "Profil";
+        return "Profil/Profil";
     }
+
 
     @GetMapping("/logout")
     public String logout() {

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Header Fragment</title>
+</head>
+<body>
+<div th:fragment="header">
+    <header>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Home Page</a></li>
+                <!-- Afficher seulement si l'utilisateur est connecté et possède des appartements -->
+                <li sec:authorize="${isAuthenticated() and hasApparts}"><a th:href="@{/louer}">Louer votre bien</a></li>
+                <!-- Afficher seulement si l'utilisateur est connecté -->
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/CreationAppart}">Ajouter un Appartement</a>
+                </li>
+                <!-- Toggle entre Connexion et Profil -->
+                <li sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}">Se connecter</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/profil}" th:text="${#authentication.principal.username}">Profil</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout}">Déconnexion</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+</div>
+</body>
+</html>

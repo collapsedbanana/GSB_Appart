@@ -1,42 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Accueil</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/home.css}">
 </head>
 <body>
-<header>
-    <nav>
-        <ul>
-            <li><a th:href="@{/home}">Accueil</a></li>
-            <!-- Condition pour afficher l'option de connexion ou de déconnexion -->
-            <li th:if="${not #authorization.expression('isAuthenticated()')}"><a th:href="@{/login}">Connexion</a></li>
-            <li th:if="${#authorization.expression('isAuthenticated()')}"><a th:href="@{/logout}">Déconnexion</a></li>
-        </ul>
-    </nav>
-</header>
+<div th:replace="Fragments/Header/Header :: Header"></div>
 
-<main>
-    <h1>Appartements disponibles à la location</h1>
-    <div class="appartements-container">
-        <!-- Boucle sur chaque appartement -->
-        <div th:each="appart : ${appartements}" class="appartement">0
-            <h2 th:text="${appart.type_appart}">Type d'appartement</h2>
-            <p th:text="'Prix location: ' + ${appart.prix_loc} + '€'">Prix location</p>
-            <p th:text="'Prix charges: ' + ${appart.prix_charge} + '€'">Prix charges</p>
-            <p th:text="'Adresse: ' + ${appart.rue} + ', ' + ${appart.arrondissement} + ' arrondissement'">Adresse</p>
-            <p th:text="'Etage: ' + ${appart.etage}">Etage</p>
-            <p th:text="'Ascenseur: ' + (${appart.ascenseur} ? 'Oui' : 'Non')">Ascenseur</p>
-            <p th:text="'Disponible à partir du ' + ${#dates.format(appart.date_libre, 'dd-MM-yyyy')}">Date disponible</p>
-            <!-- Lien pour voir plus de détails ou contacter le propriétaire, accessible seulement aux utilisateurs connectés -->
-            <a th:if="${#authorization.expression('isAuthenticated()')}" th:href="@{/appartements/details(__${appart.id}__)}" class="details-link">Voir détails</a>
+<div class="container">
+    <h1>Liste des Appartements</h1>
+    <div class="appartements">
+        <div th:each="appart : ${appartements}">
+            <div class="appart">
+                <h2 th:text="${appart.type_appart}"></h2>
+                <p><b>Prix location :</b> <span th:text="${appart.prix_loc}"></span> €</p>
+                <p><b>Charges :</b> <span th:text="${appart.prix_charge}"></span> €</p>
+                <p><b>Adresse :</b> <span th:text="${appart.rue} + ', ' + appart.arrondissement"></span></p>
+                <p><b>Étage :</b> <span th:text="${appart.etage}"></span></p>
+                <p><b>Ascenseur :</b> <span th:text="${appart.ascenseur ? 'Oui' : 'Non'}"></span></p>
+                <p><b>Date libre :</b> <span th:text="${appart.date_libre}"></span></p>
+                <div th:if="${appart.photos.size() > 0}">
+                    <img th:src="@{${appart.photos.get(0).url}}" alt="Photo de l'appartement" />
+                </div>
+                <a th:href="@{/appartements/détail/{id}(id=${appart.id_appart})}">Voir détails</a>
+            </div>
         </div>
     </div>
-</main>
-
-<footer>
-    <p>Droits réservés - Votre Compagnie</p>
-</footer>
+</div>
 </body>
 </html>

@@ -39,7 +39,7 @@ public class Appart  {
     private String localisation_gps;
     private int metre;
 
-    //Proprio
+    //Proprios
     @ManyToOne
     @JoinColumn(referencedColumnName = "id_user")
     private Proprios proprios;

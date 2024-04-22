@@ -25,7 +25,7 @@ public class ConnexionController {
 
     public String loginForm() {
 
-        return "Connexion";
+        return "Connexion/Connexion";
     }
 }
 

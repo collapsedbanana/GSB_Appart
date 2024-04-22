@@ -19,13 +19,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 public abstract class Utilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_user;
+    private Long id;
 
     private String nom;
     private String prenom;
     private String adresse;
     private int code_ville;
-    private int tel;
+    private long tel;
     private String email;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -42,11 +42,11 @@ public abstract class Utilisateur {
     )
     private Set<Role> roles;
 
-    public Utilisateur(String adresse, int code_ville, LocalDate date_naiss, String email, String login, String mdp, String nom, String prenom, int tel) {
-        this.nom = nom;
-        this.prenom = prenom;
+    public Utilisateur(String adresse, int code_ville, LocalDate date_naiss, String email, String login, String mdp, String nom, String prenom, long tel) {
         this.adresse = adresse;
         this.code_ville = code_ville;
+        this.nom = nom;
+        this.prenom = prenom;
         this.tel = tel;
         this.email = email;
         this.date_naiss = date_naiss;
@@ -54,5 +54,5 @@ public abstract class Utilisateur {
         this.mdp = mdp;
     }
 
-    // Getters and setters...
+    //toute façon pas instancier
 }

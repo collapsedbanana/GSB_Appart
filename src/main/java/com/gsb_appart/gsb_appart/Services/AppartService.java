@@ -60,4 +60,16 @@
                     .orElseThrow(() -> new RuntimeException("Appartement non trouvé pour cet id :: " + id));
             appartRepository.delete(appart);
         }
+
+        public Appart save(Appart appart) {
+            return appartRepository.save(appart);
+        }
+
+        public List<Appart> getAppartsByPropriosId(Long id) {
+            return appartRepository.findByProprios_IdUser(id); // This follows Java conventions
+
+
+        }
+
+
     }

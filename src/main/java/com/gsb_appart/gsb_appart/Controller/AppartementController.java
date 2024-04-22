@@ -1,8 +1,13 @@
 package com.gsb_appart.gsb_appart.Controller;
 
 import com.gsb_appart.gsb_appart.Model.Apparts.Appart;
+import com.gsb_appart.gsb_appart.Security.ExtendedUserDetails;
 import com.gsb_appart.gsb_appart.Services.AppartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,12 +28,19 @@ public class AppartementController {
     }
 
 
+
     @GetMapping("/lister")
     public String listerAppartements(Model model) {
-        model.addAttribute("appartements", appartService.getAllApparts());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            Long userId = ((ExtendedUserDetails) authentication.getPrincipal()).getUserId(); // Correct casting
+            boolean hasApparts = !appartService.getAppartsByPropriosId(userId).isEmpty();
+
+            model.addAttribute("appartements", appartService.getAllApparts());
+            model.addAttribute("hasApparts", hasApparts); // Add this line to pass the hasApparts status to the model
+        }
         return "ModiferAppart";
     }
-
 
     @GetMapping("/modifier/{id}")
     public ModelAndView afficherFormulaireModification(@PathVariable("id") Long id) {
@@ -51,4 +63,7 @@ public class AppartementController {
         appartService.deleteAppart(id);
         return "redirect:/appartements/lister";
     }
+
+
+
 }

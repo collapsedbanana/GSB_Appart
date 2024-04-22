@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Profil</title>
-    <link rel="stylesheet" href="/Profil.css">
+    <link rel="stylesheet" href="/CSS/Profil.css">
 </head>
 <body>
 
@@ -34,7 +34,7 @@
             <td th:text="${appart.arrondissement}"></td>
             <td th:text="${appart.etage}"></td>
             <td th:text="${appart.ascenseur ? 'Oui' : 'Non'}"></td>
-            <td th:text="${appart.preavis}"></td>
+            <td th:text="${appart.preavis}"></td>-
             <td th:text="${#dates.format(appart.date_libre, 'dd/MM/yyyy')}"></td>
         </tr>
         </tbody>
@@ -47,7 +47,7 @@
     <div style="height:20px;"></div>
 </div>
 
-<form action="/logout" method="get">
+<form action="#" th:action="@{/logout}" method="post">
     <button type="submit">Se déconnecter</button>
 </form>
 

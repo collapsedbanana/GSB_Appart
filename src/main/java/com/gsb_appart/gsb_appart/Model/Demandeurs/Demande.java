@@ -22,7 +22,7 @@ public class Demande extends Utilisateur {
     public Demande() {
         super();
     }
-    public Demande(  String adresse, int code_ville,LocalDate date_naiss, String email,String login, String mdp, String nom,String prenom,  int tel)  {
+    public Demande(  String adresse, int code_ville,LocalDate date_naiss, String email,String login, String mdp, String nom,String prenom,  long tel)  {
         super( adresse, code_ville, date_naiss, email, login,  mdp,  nom, prenom, tel);
     }
 

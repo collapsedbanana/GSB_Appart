@@ -21,7 +21,9 @@ public class SpringSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/home", "/js/**", "/css/**", "/img/**", "/public/**", "/inscription", "/inscriptionConfirmation").permitAll()
+                        .requestMatchers("/", "/home", "/inscription", "/inscriptionConfirmation").permitAll()  // Ensured paths are correctly separated by commas
+                        .requestMatchers("/login", "/js/**", "/css/**", "/img/**", "/public/**").permitAll()  // Simplified to avoid redundant paths
+                        .requestMatchers("/louer").authenticated()
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/proprietaire/**").hasAuthority("ROLE_PROPRIETAIRE")
                         .requestMatchers("/locataire/**").hasAuthority("ROLE_LOCATAIRE")
@@ -29,12 +31,12 @@ public class SpringSecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")
+                        .loginPage("/")
                         .defaultSuccessUrl("/profil", true)
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/home")
+                        .logoutSuccessUrl("/")  // Updated to match the publicly accessible URL
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .permitAll()
@@ -49,4 +51,3 @@ public class SpringSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
-

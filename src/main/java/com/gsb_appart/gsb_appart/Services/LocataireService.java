@@ -1,11 +1,12 @@
-package com.gsb_appart.gsb_appart.Services;
+ package com.gsb_appart.gsb_appart.Services;
 
+import com.gsb_appart.gsb_appart.Model.Apparts.Appart;
 import com.gsb_appart.gsb_appart.Model.Locataires.Locataire;
+import com.gsb_appart.gsb_appart.Repository.AppartRepository;
 import com.gsb_appart.gsb_appart.Repository.LocataireRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.transaction.annotation.Transactional;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,11 +16,39 @@ import java.util.Optional;
 public class LocataireService {
 
     private final LocataireRepository locataireRepository;
+    private final AppartRepository appartRepository;
 
+    @Transactional
+    public Locataire addLocataire(Locataire locataire) {
+        if (locataire.getIdAppart() == null) {
+            throw new IllegalStateException("Un locataire doit avoir un appartement assigné.");
+        }
 
-    @PostMapping
-    public Locataire addLocataire(@RequestBody Locataire locataire) {
-        return locataireRepository.save(locataire); // Correction ici : Utiliser photoRepository au lieu de PhotoRepository
+        Appart appart = appartRepository.findById(locataire.getIdAppart())
+                .orElseThrow(() -> new RuntimeException("Appartement non trouvé pour cet id :: " + locataire.getIdAppart()));
+
+        if (appart.getLocataire() != null) {
+            throw new IllegalStateException("L'appartement est déjà assigné à un autre locataire.");
+        }
+
+        // Associer l'appartement au locataire
+        locataire.setAppart(appart);
+        appart.setLocataire(locataire);
+
+        // Sauvegarder le locataire et l'appartement avec la relation établie
+        Locataire savedLocataire = locataireRepository.save(locataire);
+        appartRepository.save(appart);
+
+        return savedLocataire;
+    }
+
+    public Locataire assignLocataireToAppart(Locataire locataire, Long appartId) {
+        Appart appart = appartRepository.findById(appartId).orElseThrow(() -> new RuntimeException("Appartement non trouvé"));
+        if (appart.getLocataire() != null) {
+            throw new IllegalStateException("Cet appartement a déjà un locataire.");
+        }
+        locataire.setAppart(appart);
+        return locataireRepository.save(locataire);
     }
 
     public List<Locataire> getAllLocataires() {

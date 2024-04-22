@@ -3,6 +3,7 @@ package com.gsb_appart.gsb_appart.Services;
 import com.gsb_appart.gsb_appart.Model.Demandeurs.Demande;
 import com.gsb_appart.gsb_appart.Repository.DemandeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -63,4 +64,8 @@ public class DemandeService {
                 .orElseThrow(() -> new RuntimeException("Demande non trouvée avec cet id"));
         demanderepository.delete(demande);
     }
+
+
+
+
 }

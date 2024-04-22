@@ -20,11 +20,11 @@ public class Locataire extends Utilisateur {
     private String banque;
     private String rue_banque;
     private int codeville_banque;
-    private int tel_banque;
+    private long tel_banque;
     private int numappart;
     private Long idAppart;
 
-    public Locataire(  String adresse, int code_ville,LocalDate date_naiss, String email,String login, String mdp, String nom,String prenom,  int tel, String banque,int codeville_banque, String num_compte, String num_cpte_banque, int numappart, String rue_banque, int tel_banque)  {
+    public Locataire(  String adresse, int code_ville,LocalDate date_naiss, String email,String login, String mdp, String nom,String prenom,  long tel, String banque,int codeville_banque, String num_compte, String num_cpte_banque, int numappart, String rue_banque, long tel_banque)  {
         super( adresse, code_ville, date_naiss, email, login,  mdp,  nom, prenom, tel);
         this.num_cpte_banque = num_cpte_banque;
         this.num_compte = num_compte;
