@@ -31,11 +31,10 @@ public class LocataireService {
             throw new IllegalStateException("L'appartement est déjà assigné à un autre locataire.");
         }
 
-        // Associer l'appartement au locataire
+
         locataire.setAppart(appart);
         appart.setLocataire(locataire);
 
-        // Sauvegarder le locataire et l'appartement avec la relation établie
         Locataire savedLocataire = locataireRepository.save(locataire);
         appartRepository.save(appart);
 
@@ -80,5 +79,19 @@ public class LocataireService {
         Locataire locataire = locataireRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Locataire non trouvé pour cet id :: " + id));
         locataireRepository.delete(locataire);
+    }
+
+    public boolean isUserALocataire(Long id){
+        return locataireRepository.existsById(id);
+    }
+
+    public Locataire getLocataireByEmail(String email) {
+        Optional<Locataire> locataire = locataireRepository.findByEmail(email);
+        return locataire.orElse(null);  // Return null or another appropriate action if Locataire is not found
+    }
+
+    public Locataire getLocataireByLogin(String login) {
+        Optional<Locataire> locataire = locataireRepository.findByLogin(login);
+        return locataire.orElse(null);  // Same handling as above
     }
 }

@@ -11,5 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface AppartRepository extends JpaRepository<Appart, Long> {
-    Optional<Appart> findByProprios_Id(Long id);
+
+        List<Appart> findByProprios_Id(Long id);
+        List<Appart> findByLocataire_Id(Long id);
 }

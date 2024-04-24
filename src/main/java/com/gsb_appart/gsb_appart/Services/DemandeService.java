@@ -1,13 +1,17 @@
 package com.gsb_appart.gsb_appart.Services;
 
+import com.gsb_appart.gsb_appart.Model.Apparts.Appart;
 import com.gsb_appart.gsb_appart.Model.Demandeurs.Demande;
+import com.gsb_appart.gsb_appart.Model.Role.Role;
 import com.gsb_appart.gsb_appart.Repository.DemandeRepository;
+import com.gsb_appart.gsb_appart.Repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,57 +19,65 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DemandeService {
 
-    private final DemandeRepository demanderepository;
+    private final DemandeRepository demandeRepository;
+    private final RoleRepository roleRepository; // Inject the RoleRepository
 
-    @PostMapping
-    public Demande addDemande(@RequestBody Demande demande) {
-        return demanderepository.save(demande);
+    public Demande addDemande(Demande demande) {
+        return demandeRepository.save(demande);
     }
+
     public List<Demande> getAllDemande() {
-        return demanderepository.findAll();
+        return demandeRepository.findAll();
     }
 
     public Demande getDemandeByEmail(String email) {
-        return demanderepository.findByEmail(email).orElse(null);
+        return demandeRepository.findByEmail(email).orElse(null);
     }
 
     public boolean emailExists(String email) {
-        return demanderepository.findByEmail(email).isPresent(); //
+        return demandeRepository.findByEmail(email).isPresent();
     }
 
     public boolean loginExist(String login) {
-        return demanderepository.findByLogin(login).isPresent();
-    }
-    public Demande getDemandeById(Long id) {
-        return demanderepository.findById(id).orElse(null);
+        return demandeRepository.findByLogin(login).isPresent();
     }
 
-    public Demande getDemandeByLogin(String login){ return demanderepository.findByLogin(login).orElse(null);
+    public Demande getDemandeById(Long id) {
+        return demandeRepository.findById(id).orElse(null);
     }
-    public Demande updateDemande(Long id, Demande DemandeDetail) {
-        Demande demande = demanderepository.findById(id)
+
+    public Demande getDemandeByLogin(String login) {
+        return demandeRepository.findByLogin(login).orElse(null);
+    }
+
+    public Demande updateDemande(Long id, Demande demandeDetail) {
+        Demande demande = demandeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Demande non trouvée avec cet id"));
 
-        demande.setNom(DemandeDetail.getNom());
-        demande.setPrenom(DemandeDetail.getPrenom());
-        demande.setAdresse(DemandeDetail.getAdresse());
-        demande.setCode_ville(DemandeDetail.getCode_ville());
-        demande.setTel(DemandeDetail.getTel());
-        demande.setEmail(DemandeDetail.getEmail());
-        demande.setDate_naiss(DemandeDetail.getDate_naiss());
-        demande.setLogin(DemandeDetail.getLogin());
-        demande.setMdp(DemandeDetail.getMdp());
+        demande.setNom(demandeDetail.getNom());
+        demande.setPrenom(demandeDetail.getPrenom());
+        demande.setAdresse(demandeDetail.getAdresse());
+        demande.setCode_ville(demandeDetail.getCode_ville());
+        demande.setTel(demandeDetail.getTel());
+        demande.setEmail(demandeDetail.getEmail());
+        demande.setDate_naiss(demandeDetail.getDate_naiss());
+        demande.setLogin(demandeDetail.getLogin());
+        demande.setMdp(demandeDetail.getMdp());
 
-        return demanderepository.save(demande);
+        return demandeRepository.save(demande);
     }
 
     public void deleteDemande(Long id) {
-        Demande demande = demanderepository.findById(id)
+        Demande demande = demandeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Demande non trouvée avec cet id"));
-        demanderepository.delete(demande);
+        demandeRepository.delete(demande);
     }
 
-
-
-
+    public Demande createNewDemande(Demande demande) {
+        // Assign a default role
+        Role defaultRole = roleRepository.findByName("ROLE_USER")
+                .orElseThrow(() -> new RuntimeException("Default role not found"));
+        demande.setRoles(Collections.singleton(defaultRole));
+        return demandeRepository.save(demande);
+    }
 }

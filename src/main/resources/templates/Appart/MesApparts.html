@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mes Appartements</title>
+</head>
+<body>
+<h1>Mes Appartements</h1>
+
+<div th:replace="Fragments/Header/Header :: header"></div>
+<div>
+    <a th:href="@{/appartements/ajouter}" class="btn btn-primary">Créer un nouvel appartement</a>
+</div>
+
+<div th:if="${hasApparts}">
+    <table>
+        <thead>
+        <tr>
+            <th>Type d'appartement</th>
+            <th>Prix location</th>
+            <th>Prix charges</th>
+            <th>Adresse</th>
+            <th>Étage</th>
+            <th>Ascenseur</th>
+            <th>Date libre</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="appart : ${appartements}">
+            <td th:text="${appart.type_appart}"></td>
+            <td th:text="${appart.prix_loc} + ' €'"></td>
+            <td th:text="${appart.prix_charge} + ' €'"></td>
+            <td th:text="${appart.rue} + ', ' + ${appart.arrondissement}"></td>
+            <td th:text="${appart.etage}"></td>
+            <td th:text="${appart.ascenseur ? 'Oui' : 'Non'}"></td>
+            <td th:text="${appart.date_libre}"></td>
+            <td>
+                <a th:href="@{/appartements/modifier/{id}(id=${appart.id_appart})}">Modifier</a>
+                <a th:href="@{/appartements/supprimer/{id}(id=${appart.id_appart})}">Supprimer</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:unless="${hasApparts}">
+    <p>Aucun appartement trouvé.</p>
+</div>
+
+</body>
+</html>

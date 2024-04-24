@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
+    <meta charset="utf-8">
     <title>Header Fragment</title>
 </head>
 <body>
@@ -8,14 +9,19 @@
     <header>
         <nav>
             <ul>
-                <li><a th:href="@{/}">Home Page</a></li>
-                <!-- Afficher seulement si l'utilisateur est connecté et possède des appartements -->
-                <li sec:authorize="${isAuthenticated() and hasApparts}"><a th:href="@{/louer}">Louer votre bien</a></li>
-                <!-- Afficher seulement si l'utilisateur est connecté -->
+                <li><a th:href="@{/}">Page d'accueil</a></li>
+
+                <!-- Liens visibles uniquement pour les utilisateurs authentifiés -->
                 <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/UpdateorCreate}">Ajouter un Appartement</a>
+                    <a th:href="@{/louer}">Louer un bien ?</a>
                 </li>
-                <!-- Toggle entre Connexion et Profil -->
+                <!-- Redirection vers la liste des appartements si l'utilisateur en possède -->
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/appartements/lister}">Mes Appartements</a>
+                </li>
+
+
+                <!-- Gestion de la connexion et du profil -->
                 <li sec:authorize="!isAuthenticated()">
                     <a th:href="@{/login}">Se connecter</a>
                 </li>

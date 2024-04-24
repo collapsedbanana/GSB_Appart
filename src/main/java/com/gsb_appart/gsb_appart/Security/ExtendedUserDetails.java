@@ -1,21 +1,24 @@
 package com.gsb_appart.gsb_appart.Security;
 
 import com.gsb_appart.gsb_appart.Model.Users.Utilisateur;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
-import java.util.Collections;
 
 public class ExtendedUserDetails implements UserDetails {
     private final Utilisateur utilisateur;
+    private final Collection<? extends GrantedAuthority> authorities;
+    private boolean hasApparts;
 
-    public ExtendedUserDetails(Utilisateur utilisateur) {
+    public ExtendedUserDetails(Utilisateur utilisateur, Collection<? extends GrantedAuthority> authorities, boolean hasApparts) {
         this.utilisateur = utilisateur;
+        this.authorities = authorities;
+        this.hasApparts = hasApparts;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList(); // Customize based on your needs
+        return authorities; // Now returns the actual authorities
     }
 
     @Override
@@ -30,6 +33,11 @@ public class ExtendedUserDetails implements UserDetails {
 
     public Long getUserId() {
         return utilisateur.getId();
+    }
+
+    // Standard boolean access methods follow Java naming conventions
+    public boolean hasApparts() {
+        return hasApparts;
     }
 
     @Override

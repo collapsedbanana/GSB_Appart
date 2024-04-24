@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription Locataire</title>
+</head>
+<body>
+
+<form th:action="@{/inscription/locataire}" th:object="${locataire}" method="post">
+    <div>
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" th:field="*{nom}" required>
+    </div>
+    <div>
+        <label for="prenom">Prénom:</label>
+        <input type="text" id="prenom" th:field="*{prenom}" required>
+    </div>
+    <!-- Ajoutez les autres champs de Locataire ici -->
+    <div>
+        <label for="adresse">Adresse:</label>
+        <input type="text" id="adresse" th:field="*{adresse}" required>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" required>
+    </div>
+    <div>
+        <label for="mdp">Mot de passe:</label>
+        <input type="password" id="mdp" th:field="*{mdp}" required>
+    </div>
+    <!-- Ajoutez les champs spécifiques au Locataire ici -->
+    <div>
+        <label for="banque">Banque:</label>
+        <input type="text" id="banque" th:field="*{banque}" required>
+    </div>
+    <div>
+        <button type="submit">S'inscrire</button>
+    </div>
+</form>
+
+</body>
+</html>

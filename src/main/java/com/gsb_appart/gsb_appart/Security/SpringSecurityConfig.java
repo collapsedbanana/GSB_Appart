@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
+
 
 @EnableWebSecurity
 @Configuration
@@ -21,22 +23,23 @@ public class SpringSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/home", "/inscription", "/inscriptionConfirmation").permitAll()  // Ensured paths are correctly separated by commas
-                        .requestMatchers("/login", "/js/**", "/css/**", "/img/**", "/public/**").permitAll()  // Simplified to avoid redundant paths
-                        .requestMatchers("/louer").authenticated()
+                        .requestMatchers("/", "/home", "/inscription", "/inscriptionConfirmation", "/js/**", "/css/**", "/img/**", "/public/**").permitAll()
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/louer", "/UpdateorCreate").authenticated()
+                        .requestMatchers("/user/**").hasAuthority("ROLE_USER")
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/proprietaire/**").hasAuthority("ROLE_PROPRIETAIRE")
                         .requestMatchers("/locataire/**").hasAuthority("ROLE_LOCATAIRE")
-                        .requestMatchers("/profil", "/appartements/lister").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/")
-                        .defaultSuccessUrl("/profil", true)
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/", true)
+                        .failureUrl("/login?error=true")  // Redirect to the login page with an error message
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/")  // Updated to match the publicly accessible URL
+                        .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .permitAll()
@@ -50,4 +53,10 @@ public class SpringSecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    @Bean
+    public SpringSecurityDialect springSecurityDialect() {
+        return new SpringSecurityDialect();
+    }
 }
+
+

@@ -67,8 +67,12 @@
         }
 
         public List<Appart> getAppartsByPropriosId(Long id) {
-            Optional<Appart> appart = appartRepository.findByProprios_Id(id);
-            return appart.map(Collections::singletonList).orElse(Collections.emptyList());
+            return appartRepository.findByProprios_Id(id);
+        }
+
+
+        public List<Appart> getAppartByLocataireId(Long locataireId) {
+            return appartRepository.findByLocataire_Id(locataireId);
         }
 
 

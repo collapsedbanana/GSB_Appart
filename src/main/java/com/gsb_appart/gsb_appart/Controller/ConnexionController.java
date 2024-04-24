@@ -28,7 +28,7 @@ public class ConnexionController {
         return "Connexion/Connexion";
     }
 }
-
+//Ancienne méthode de connexion non optimal et surtout ne fonctionne pas à cause de spring security
 /*    @PostMapping("/login")
     public String loginSubmit(@RequestParam String username, @RequestParam String password) {
         System.out.println("Tentative de connexion avec : " + username); //rien ne s'affiche je meurs 3h30

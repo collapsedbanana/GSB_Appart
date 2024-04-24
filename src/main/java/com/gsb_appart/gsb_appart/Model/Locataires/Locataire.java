@@ -2,11 +2,13 @@ package com.gsb_appart.gsb_appart.Model.Locataires;
 
 import com.gsb_appart.gsb_appart.Model.Apparts.Appart;
 import com.gsb_appart.gsb_appart.Model.Users.Utilisateur;
+import com.gsb_appart.gsb_appart.Model.Visites.Visite;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import java.time.LocalDate;
+import java.util.Collection;
 
 @Entity
 @Getter
@@ -42,4 +44,8 @@ public class Locataire extends Utilisateur {
     @OneToOne
     @JoinColumn(name = "appart_id_appart")
     private Appart appart;
+
+    @OneToMany(mappedBy = "locataire")
+    private Collection<Visite> visites;
+
 }

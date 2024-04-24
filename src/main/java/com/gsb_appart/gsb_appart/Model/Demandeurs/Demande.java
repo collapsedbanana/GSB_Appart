@@ -26,11 +26,7 @@ public class Demande extends Utilisateur {
         super( adresse, code_ville, date_naiss, email, login,  mdp,  nom, prenom, tel);
     }
 
-    @OneToMany(mappedBy = "demande")
-    private Collection<Visite> visiter;
 
-    public void setVisiter(Collection<Visite> visiter) {
-        this.visiter = visiter;
-    }
+
 }
 

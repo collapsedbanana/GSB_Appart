@@ -1,4 +1,4 @@
-/* package com.gsb_appart.gsb_appart;
+package com.gsb_appart.gsb_appart;
 
 import com.gsb_appart.gsb_appart.Model.Locataires.Locataire;
 import com.gsb_appart.gsb_appart.Model.Proprios.Proprios;
@@ -47,4 +47,3 @@ public class JeuEssai {
         };
     }
 }
-*/
