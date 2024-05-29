@@ -65,8 +65,7 @@ Ce projet est un exemple de site de gestion de location d'appartements, avec des
 - **Java**
 - **Spring Boot**
 - **Spring Security**
-
-```Voir les autres dépendances dans le pom.xml
+//Voir les autres dépendances dans le pom.xml
 
 ## Progrès et Défis
 
