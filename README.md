@@ -65,8 +65,3 @@ Ce projet est un exemple de site de gestion de location d'appartements, avec des
 - **Java**
 - **Spring Boot**
 - **Spring Security**
-//Voir les autres dépendances dans le pom.xml
-
-## Progrès et Défis
-
-Ce projet est toujours en développement, notamment en ce qui concerne l'implémentation de rôles avec des privilèges élevés. La combinaison de Spring Boot et Spring Security a présenté plusieurs défis techniques et de compréhension, mais a également été une opportunité d'apprentissage significative.
